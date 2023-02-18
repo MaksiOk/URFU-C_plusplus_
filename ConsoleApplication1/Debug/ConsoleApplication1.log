@@ -1,0 +1,11 @@
+﻿  ConsoleApplication1.cpp
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(16): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "1" имеет тип "double *"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(16): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "2" имеет тип "double"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(16): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "3" имеет тип "double **"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(18): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "1" имеет тип "double *"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(18): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "2" имеет тип "double"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(18): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "3" имеет тип "double **"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(19): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "1" имеет тип "double *"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(19): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "2" имеет тип "double"
+c:\современные языки окатов\visualstudio\consoleapplication1\consoleapplication1.cpp(19): warning C4477: "printf": в строке форматирования "%u" требуется аргумент типа "unsigned int", но вариативный аргумент "3" имеет тип "double **"
+  ConsoleApplication1.vcxproj -> C:\Современные языки Окатов\VisualStudio\ConsoleApplication1\Debug\LR1 exmp2.exe

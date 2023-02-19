@@ -1,7 +1,7 @@
 # URFU-C_plusplus_
 
 
-Лабараторные работы по C++   
+#Лабараторные работы по C++/ C++ lab   
 
 Среда разработки:   Visual Studio;  
 Предмет:            Современные языки программирование;  
@@ -12,7 +12,7 @@
 ВУЗ:                УРФУ;  
 
 
-C++ Labs  
+
 
 IDE:        Visual Studio;  
 Subject:    Modern programming languages;  

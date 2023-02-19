@@ -1,12 +1,15 @@
 ﻿// LR2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <iomanip>
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
 #include <string>
+#include <stdio.h>
 
 #define N 5
 
@@ -16,13 +19,15 @@ using namespace std;
 
 int main()
 {
-    const int MAX_N = 10;       // максимально-допустимая размерность матрицы
-    const int MIN_VALUE = -5;   // максимальное значение элементов матрицы
-    const int MAX_VALUE = 5;    // минимальное значение
+
+    //const int MAX_N = 10;       // максимально-допустимая размерность матрицы
+    //const int MIN_VALUE = -5;   // максимальное значение элементов матрицы
+    //const int MAX_VALUE = 5;    // минимальное значение
 
     float m[N][N]{};
     float min = 0.0;
     float max = 0.0;
+
     
     void print_menu();
     int get_variant(int);
@@ -50,11 +55,12 @@ int main()
     float columns_average(float(*)[N]);         //21
     float sum_L(float(*)[N]);                   //22
     float sum_U(float(*)[N]);                   //23
-    float closest_to_average(float(*)[N], int); //24
+    float closest_to_average(float(*)[N], float); //24
     
 
     int i, j;
     int variant;
+    float  tmp = 0;
 
     srand(time(NULL)); 
 
@@ -68,6 +74,10 @@ int main()
     //cout << max << endl;
     
     do {
+
+
+        print_menu();
+
         cout << endl;
 
         for (i = 0; i < N; i++) {
@@ -77,8 +87,6 @@ int main()
         }
 
         cout << endl;
-
-        print_menu();
 
         variant = get_variant(25); // получаем номер выбранного пункта меню
 
@@ -213,8 +221,9 @@ int main()
             break;
 
         case 24:
-
-            max = closest_to_average(m, average_matrix(m));
+            tmp = average_matrix(m);
+            max = closest_to_average(m, tmp);
+            cout << "If Average of matrix = " <<tmp<< endl;
             cout <<"Closest to average: " << max;
             cout << endl;
             break;
@@ -437,8 +446,7 @@ float average_U(float(*nm)[N]) {
 float rows_sum(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
+    
     float max = nm[i][j];
 
     for (i = 0; i < N; i++) {
@@ -457,8 +465,7 @@ float rows_sum(float(*nm)[N]) {
 float columns_sum(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
+    
     float max = nm[i][j];
 
     for (j = 0; j < N; j++) {
@@ -477,8 +484,7 @@ float columns_sum(float(*nm)[N]) {
 float rows_min(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
+   
     float min = nm[i][j];
 
     for (i = 0; i < N; i++) {
@@ -487,7 +493,7 @@ float rows_min(float(*nm)[N]) {
             if (nm[i][j] < min) min = nm[i][j];
         }
         cout << "Minimum of Row " << i << ":" << setw(8) << setprecision(5) << min << endl;
-        min = nm[i][j];
+        min = nm[i+1][0];
     }
 
     return (0);
@@ -497,8 +503,7 @@ float rows_min(float(*nm)[N]) {
 float columns_min(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
+   
     float min = nm[i][j];
 
     for (j = 0; j < N; j++) {
@@ -507,8 +512,8 @@ float columns_min(float(*nm)[N]) {
             if (nm[i][j] < min) min = nm[i][j];
         }
         cout << "Minimum of Column " << j << ":" << setw(8) << setprecision(5) << min << endl;
-        min = nm[i][j];
-    }
+        min = nm[0][j+1];
+       }
 
     return (0);
 }
@@ -517,8 +522,7 @@ float columns_min(float(*nm)[N]) {
 float rows_max(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
+    
     float max = nm[i][j];
 
     for (i = 0; i < N; i++) {
@@ -527,27 +531,26 @@ float rows_max(float(*nm)[N]) {
             if (nm[i][j] > max) max = nm[i][j];
         }
         cout << "Maximum of Row " << i << ":" << setw(8) << setprecision(5) << max << endl;
-        max = nm[i][j];
+        max = 0;
     }
 
     return (0);
 }
 
-//----------------------- 19. Минимум столбцов матрицы    -----
+//----------------------- 19. Максимум столбцов матрицы    -----
 float columns_max(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
-
-    float min = nm[i][j];
+    
+    float max = nm[i][j];
 
     for (j = 0; j < N; j++) {
         for (i = 0; i < N; i++)
         {
-            if (nm[i][j] < min) min = nm[i][j];
+            if (nm[i][j] > max) max = nm[i][j];
         }
-        cout << "Maximum of column " << j << ":" << setw(8) << setprecision(5) << min << endl;
-        min = nm[i][j];
+        cout << "Maximum of column " << j << ":" << setw(8) << setprecision(5) << max << endl;
+        max = 0;
     }
 
     return (0);
@@ -557,7 +560,6 @@ float columns_max(float(*nm)[N]) {
 float rows_average(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
 
     float max = nm[i][j];
 
@@ -578,7 +580,6 @@ float rows_average(float(*nm)[N]) {
 float columns_average(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    int c = -1;
 
     float max = nm[i][j];
 
@@ -589,7 +590,7 @@ float columns_average(float(*nm)[N]) {
         }
         max = max / N;
         cout << "Column average " << j << ":" << setw(8) << setprecision(5) << max << endl;
-        max = nm[i][j];
+        max = 0;
     }
 
     return (0);
@@ -632,26 +633,24 @@ float sum_U(float(*nm)[N]) {
 }
 
 //----------------------- 24. Элемент наиболее близкий к среднеарифметическому -----
-float closest_to_average(float(*nm)[N], int average) {
+float closest_to_average(float(*nm)[N], float average) {
     int i = 0;
     int j = 0;
-    int a = 0;
-    int b = 0;
-   
-
+    float mtrx_lmt = 0.0;  //элемент матрицы   
     float max = nm[i][j];
 
-    float diff = nm[i][j]-average;             //переменная для разности
+    float diff = abs(nm[i][j]-average);             //переменная для разности
 
     for (i = 0; i < N; i++){
         for (j = 0; j < N; j++)
         {
-            if ((max = nm[i][j] - average) < diff ) {
+            if ((max = abs(nm[i][j] - average)) < diff ) {
                 diff = max;
+                mtrx_lmt = nm[i][j];
             }
         }
     }
-    return diff;
+    return mtrx_lmt;
 }
 
 
@@ -661,28 +660,28 @@ void print_menu() {
     cout << "Operation with matrix" << endl;
     cout << "1. Minimum of matrix" << endl;
     cout << "2. Maxim of matrix" << endl;
-    cout << "3. Print the highest price" << endl;
-    cout << "4. Print the lowest price" << endl;
-    cout << "5. Print the lowest price" << endl;
-    cout << "6. Print the lowest price" << endl;
-    cout << "7. Print the lowest price" << endl;
-    cout << "8. Print the lowest price" << endl;
-    cout << "9. Print the lowest price" << endl;
-    cout << "10. Exit" << endl;
-    cout << "11. Exit" << endl;
-    cout << "12. Exit" << endl;
-    cout << "13. Exit" << endl;
-    cout << "14. Exit" << endl;
-    cout << "15. Exit" << endl;
-    cout << "16. Exit" << endl;
-    cout << "17. Exit" << endl;
-    cout << "18. Exit" << endl;
-    cout << "19. Exit" << endl;
-    cout << "20. Exit" << endl;
-    cout << "21. Exit" << endl;
-    cout << "22. Exit" << endl;
-    cout << "23. Exit" << endl;
-    cout << "24. Exit" << endl;
+    cout << "3. Maximum of the lower triangular part of the matrix" << endl;
+    cout << "4. Maximum of the upper triangular part of the matrix" << endl;
+    cout << "5. Minimum of the lower triangular part of the matrix" << endl;
+    cout << "6. Minimum of the upper triangular part of the matrix" << endl;
+    cout << "7. Minimum of the main diagonal" << endl;
+    cout << "8. Maximum of the main diagonal" << endl;
+    cout << "9. Minimum of the secondary diagonal" << endl;
+    cout << "10. Maximum of the secondary diagonal" << endl;
+    cout << "11. Average of Matrix" << endl;
+    cout << "12. Average of the lower triangular part of the matrix" << endl;
+    cout << "13. Average of the upper triangular part of the matrix" << endl;
+    cout << "14. Sum of elements Rows" << endl;
+    cout << "15. Sum of elements Columns" << endl;
+    cout << "16. Minimum of Rows" << endl;
+    cout << "17. Minimum of Columns" << endl;
+    cout << "18. Maximum of Rows" << endl;
+    cout << "19. Maximum of columns" << endl;
+    cout << "20. Rows average" << endl;
+    cout << "21. Column average" << endl;
+    cout << "22. Sum of the lower triangular part of the matrix" << endl;
+    cout << "23. Sum of the upper triangular part of the matrix" << endl;
+    cout << "24. Closest to average" << endl;
     cout << "25. Exit" << endl;
     cout << ">";
 }
@@ -690,11 +689,11 @@ void print_menu() {
 //--------- Получаем меню   -----
 int get_variant(int count) {
     int variant;
-    string s;                                                                               // строка для считывания введённых данных
-    getline(cin, s);                                                                        // считываем строку
+    string s; // строка для считывания введённых данных
+    getline(cin, s); // считываем строку                                                                    // считываем строку
 
                                                                                             // пока ввод некорректен, сообщаем об этом и просим повторить его
-    while (scanf_s(s.c_str(), "%d", &variant) != 1 || variant < 1 || variant > count) {
+    while (sscanf(s.c_str(), "%d", &variant) != 1 || variant < 1 || variant > count) {
         cout << "Incorrect input. Try again: ";                                             // выводим сообщение об ошибке
         getline(cin, s);                                                                    // считываем строку повторно
     }

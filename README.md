@@ -1,23 +1,23 @@
 # URFU-C_plusplus_
 
 
-Лабараторные работы по C++ 
+Лабараторные работы по C++   
 
-Среда разработки:   Visual Studio\r\n 
-Предмет:            Современные языки программирование\r\n 
-Преподаватель:      Чагаева О.Л.\r\n 
-Специальность:      Прикладная информатика\r\n 
-Курс:               2\r\n 
-Семестр:            4\r\n 
-ВУЗ:                УРФУ \r\n 
+Среда разработки:   Visual Studio;  
+Предмет:            Современные языки программирование;  
+Преподаватель:      Чагаева О.Л.;  
+Специальность:      Прикладная информатика;  
+Курс:               2;  
+Семестр:            4;  
+ВУЗ:                УРФУ;  
 
 
-C++ Labs
+C++ Labs  
 
-IDE:        Visual Studio
-Subject:    Modern programming languages
-Lecturer:   Chagaeva O.L.
-Specialty:  Applied Informatics
-Course:     2
-Semester:   4
-University: URFU
+IDE:        Visual Studio;  
+Subject:    Modern programming languages;  
+Lecturer:   Chagaeva O.L.;  
+Specialty:  Applied Informatics;  
+Course:     2;  
+Semester:   4;  
+University: URFU;  

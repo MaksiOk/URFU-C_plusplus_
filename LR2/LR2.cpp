@@ -1,15 +1,12 @@
 ﻿// LR2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <iostream>
 #include <iomanip>
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
 #include <string>
-#include <stdio.h>
 
 #define N 5
 
@@ -19,48 +16,36 @@ using namespace std;
 
 int main()
 {
+    const int MAX_N = 10;       // максимально-допустимая размерность матрицы
+    const int MIN_VALUE = -5;   // максимальное значение элементов матрицы
+    const int MAX_VALUE = 5;    // минимальное значение
 
-    //const int MAX_N = 10;       // максимально-допустимая размерность матрицы
-    //const int MIN_VALUE = -5;   // максимальное значение элементов матрицы
-    //const int MAX_VALUE = 5;    // минимальное значение
-
-    float m[N][N]{};
+    float m[N][N];
     float min = 0.0;
     float max = 0.0;
 
-    
-    void print_menu();
-    int get_variant(int);
+    float min_matrix(float(*)[N]);
+    float max_matrix(float(*)[N]);
+    float max_L(float(*)[N]);
+    float max_U(float(*)[N]);
+    float min_L(float(*)[N]);
+    float min_U(float(*)[N]);
+    float min_MainDiag(float(*)[N]);
+    float max_MainDiag(float(*)[N]);
+    float min_SecondaryDiag(float(*)[N]);
+    float max_SecondaryDiag(float(*)[N]);
+    float average_matrix(float(*)[N]);
+    float rows_sum(float(*)[N]);
+    float columns_sum(float(*)[N]);
+    float rows_min(float(*)[N]);
+    float columns_min(float(*)[N]);
 
-    float min_matrix(float(*)[N]);              //1
-    float max_matrix(float(*)[N]);              //2
-    float max_L(float(*)[N]);                   //3
-    float max_U(float(*)[N]);                   //4
-    float min_L(float(*)[N]);                   //5
-    float min_U(float(*)[N]);                   //6
-    float min_MainDiag(float(*)[N]);            //7
-    float max_MainDiag(float(*)[N]);            //8
-    float min_SecondaryDiag(float(*)[N]);       //9
-    float max_SecondaryDiag(float(*)[N]);       //10
-    float average_matrix(float(*)[N]);          //11
-    float average_L(float(*)[N]);               //12
-    float average_U(float(*)[N]);               //13
-    float rows_sum(float(*)[N]);                //14
-    float columns_sum(float(*)[N]);             //15
-    float rows_min(float(*)[N]);                //16
-    float columns_min(float(*)[N]);             //17
-    float rows_max(float(*)[N]);                //18
-    float columns_max(float(*)[N]);             //19
-    float rows_average(float(*)[N]);            //20
-    float columns_average(float(*)[N]);         //21
-    float sum_L(float(*)[N]);                   //22
-    float sum_U(float(*)[N]);                   //23
-    float closest_to_average(float(*)[N], float); //24
     
 
     int i, j;
     int variant;
-    float  tmp = 0;
+
+    
 
     srand(time(NULL)); 
 
@@ -71,172 +56,49 @@ int main()
         }
     }
     
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++)
+            cout << setw(8) << setprecision(5) << m[i][j];
+            cout << endl;
+    }
+
+    max = columns_min(m);
     //cout << max << endl;
-    
+    /*
     do {
-
-
         print_menu();
 
-        cout << endl;
-
-        for (i = 0; i < N; i++) {
-            for (j = 0; j < N; j++)
-                cout << setw(8) << setprecision(5) << m[i][j];
-            cout << endl;
-        }
-
-        cout << endl;
-
-        variant = get_variant(25); // получаем номер выбранного пункта меню
+        variant = get_variant(5); // получаем номер выбранного пункта меню
 
         switch (variant) {
         case 1:
             min = min_matrix(m);
-            cout << "Minimum of matrix: " << max;
+            cout << min;
             cout << endl;
             break;
 
         case 2:
             max = max_matrix(m);
-            cout << "Maximum of matrix: " << max;
+            cout << max;
             cout << endl;
             break;
 
         case 3:
-            max = max_L(m);
-            cout << "Maximum of the lower triangular part of the matrix: " << max;
-            cout << endl;
+            print_highest(goods, size);
             break;
 
         case 4:
-            max = max_U(m);
-            cout << "Maximum of the upper triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 5:
-            max = min_L(m);
-            cout << "Minimum of the lower triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 6:
-            max = min_U(m);
-            cout << "Minimum of the upper triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 7:
-            max = min_MainDiag(m);
-            cout << "Minimum of the main diagonal: " << max;
-            cout << endl;
-            break;
-        case 8:
-            max = max_MainDiag(m);
-            cout << "Maximum of the main diagonal: " << max;
-            cout << endl;
-            break;
-
-        case 9:
-            max = min_SecondaryDiag(m);
-            cout << "Minimum of the secondary diagonal: " << max;
-            cout << endl;
-            break;
-
-        case 10:
-            max = max_SecondaryDiag(m);
-            cout << "Maximum of the secondary diagonal: " << max;
-            cout << endl;
-            break;
-
-        case 11:
-            max = average_matrix(m);
-            cout << "Average of Matrix: " << max;
-            cout << endl;
-            break;
-
-        case 12:
-            max = average_L(m);
-            cout << "Average of the lower triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 13:
-            max = average_U(m);
-            cout << "Average of the upper triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 14:
-            max = rows_sum(m);
-
-            break;
-
-        case 15:
-            max = columns_sum(m);
-
-            break;
-
-        case 16:
-            max = rows_min(m);
-
-            break;
-
-        case 17:
-            max = columns_min(m);
-
-            break;
-
-        case 18:
-            max = rows_max(m);
-
-            break;
-
-        case 19:
-            max = columns_max(m);
-
-            break;
-
-        case 20:
-            max = rows_average(m);
-
-            break;
-
-        case 21:
-            max = columns_average(m);
-
-            break;
-
-        case 22:
-            max = sum_L(m);
-            cout << "Sum of the lower triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 23:
-            max = sum_U(m);
-            cout << "Sum of the upper triangular part of the matrix: " << max;
-            cout << endl;
-            break;
-
-        case 24:
-            tmp = average_matrix(m);
-            max = closest_to_average(m, tmp);
-            cout << "If Average of matrix = " <<tmp<< endl;
-            cout <<"Closest to average: " << max;
-            cout << endl;
+            print_lowest(goods, size);
             break;
         }
 
-
-        if (variant != 25)
+        if (variant != 5)
             system("pause"); // задерживаем выполнение, чтобы пользователь мог увидеть результат выполнения выбранного пункта
-    } while (variant != 25);
-    
+    } while (variant != 5);
+    */
 }
 
-//------------------------ 1. Минимум матрицы -------------------------------
+//---------------------- Минимум матрицы -------------------------------
 float min_matrix(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -250,7 +112,7 @@ float min_matrix(float(*nm)[N]) {
     return min;
 }
 
-//------------------------ 2. Максимум матрицы   ------------------------------
+//---------------------- Максимум матрицы   ------------------------------
 float max_matrix(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -264,7 +126,7 @@ float max_matrix(float(*nm)[N]) {
     return max;
 }
 
-//------------------------ 3. Максимум нижнетреугольной части матрицы    --------------
+//-------------- Максимум нижнетреугольной части матрицы    --------------
 float max_L(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -282,7 +144,7 @@ float max_L(float(*nm)[N]) {
     return max;
 }
 
-//------------------------ 4. Максимум верхнетреугольной части матрицы   --------------
+//-------------- Максимум верхнетреугольной части матрицы   --------------
 float max_U(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -300,7 +162,7 @@ float max_U(float(*nm)[N]) {
     return max;
 }
 
-//------------------------ 5. Минимум нижнетреугольной части матрицы     --------------
+//-------------- Минимум нижнетреугольной части матрицы     --------------
 float min_L(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -318,7 +180,7 @@ float min_L(float(*nm)[N]) {
     return min;
 }
 
-//------------------------ 6. Минимум верхнетреугольной части матрицы    --------------
+//-------------- Минимум верхнетреугольной части матрицы    --------------
 float min_U(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -336,7 +198,7 @@ float min_U(float(*nm)[N]) {
     return min;
 }
 
-//------------------------ 7. Минимум главной диагонали матрицы   ------------------
+//----------------- Минимум главной диагонали матрицы   ------------------
 float min_MainDiag(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -349,7 +211,7 @@ float min_MainDiag(float(*nm)[N]) {
     return min;
 }
 
-//------------------------ 8. Максимум главной диагонали матрицы  ------------------
+//----------------- Максимум главной диагонали матрицы  ------------------
 float max_MainDiag(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -362,7 +224,7 @@ float max_MainDiag(float(*nm)[N]) {
     return max;
 }
 
-//------------------------ 9. Минимум главной диагонали матрицы   ------------------
+//----------------- Минимум главной диагонали матрицы   ------------------
 float min_SecondaryDiag(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -375,7 +237,7 @@ float min_SecondaryDiag(float(*nm)[N]) {
     return min;
 }
 
-//----------------------- 10. Максимум второстипенной диагонали матрицы   ----------
+//----------------- Максимум второстипенной диагонали матрицы   ----------
 float max_SecondaryDiag(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -388,7 +250,7 @@ float max_SecondaryDiag(float(*nm)[N]) {
     return max;
 }
 
-//----------------------- 11. Срденее арифметическое    ------------------
+//--------------------------- Срденее арифметическое    ------------------
 float average_matrix(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -404,7 +266,7 @@ float average_matrix(float(*nm)[N]) {
     return max;
 }
 
-//----------------------- 12. Срденее арифметическое нижнетреугольной части матрицы    -----
+//--------- Срденее арифметическое нижнетреугольной части матрицы    -----
 float average_L(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -423,7 +285,7 @@ float average_L(float(*nm)[N]) {
     return max;
 }
 
-//----------------------- 13. Срденее арифметическое верхнетреугольной части матрицы    -----
+//--------- Срденее арифметическое верхнетреугольной части матрицы    -----
 float average_U(float(*nm)[N]) {
     int i = 0;
     int j = 0;
@@ -442,11 +304,12 @@ float average_U(float(*nm)[N]) {
     return max;
 }
 
-//----------------------- 14. Суммы строк матрицы    -----
+//--------- Суммы строк матрицы    -----
 float rows_sum(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    
+    int c = -1;
+
     float max = nm[i][j];
 
     for (i = 0; i < N; i++) {
@@ -454,18 +317,19 @@ float rows_sum(float(*nm)[N]) {
         {
             max += nm[i][j];
         }
-        cout << "Sum of elements Row " << i << ":" << setw(8) << setprecision(5) << max << endl;
+        cout << "Row " << i << ":" << setw(8) << setprecision(5) << max << endl;
         max = 0;
     }
     
     return (0);
 }
 
-//----------------------- 15. Суммы столбцов матрицы    -----
+//--------- Суммы столбцов матрицы    -----
 float columns_sum(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-    
+    int c = -1;
+
     float max = nm[i][j];
 
     for (j = 0; j < N; j++) {
@@ -473,18 +337,19 @@ float columns_sum(float(*nm)[N]) {
         {
             max += nm[i][j];
         }
-        cout << "Sum of elements Column " << j << ":" << setw(8) << setprecision(5) << max << endl;
+        cout << "Column " << j << ":" << setw(8) << setprecision(5) << max << endl;
         max = 0;
     }
 
     return (0);
 }
 
-//----------------------- 16. Минимум строк матрицы    -----
+//--------- Минимум строк матрицы    -----
 float rows_min(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-   
+    int c = -1;
+
     float min = nm[i][j];
 
     for (i = 0; i < N; i++) {
@@ -492,18 +357,19 @@ float rows_min(float(*nm)[N]) {
         {
             if (nm[i][j] < min) min = nm[i][j];
         }
-        cout << "Minimum of Row " << i << ":" << setw(8) << setprecision(5) << min << endl;
-        min = nm[i+1][0];
+        cout << "Row " << i << ":" << setw(8) << setprecision(5) << min << endl;
+        min = nm[i][j];
     }
 
     return (0);
 }
 
-//----------------------- 17. Минимум столбцов матрицы    -----
+//--------- Минимум столбцов матрицы    -----
 float columns_min(float(*nm)[N]) {
     int i = 0;
     int j = 0;
-   
+    int c = -1;
+
     float min = nm[i][j];
 
     for (j = 0; j < N; j++) {
@@ -511,148 +377,12 @@ float columns_min(float(*nm)[N]) {
         {
             if (nm[i][j] < min) min = nm[i][j];
         }
-        cout << "Minimum of Column " << j << ":" << setw(8) << setprecision(5) << min << endl;
-        min = nm[0][j+1];
-       }
-
-    return (0);
-}
-
-//----------------------- 18. Максимум строк матрицы    -----
-float rows_max(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-    
-    float max = nm[i][j];
-
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++)
-        {
-            if (nm[i][j] > max) max = nm[i][j];
-        }
-        cout << "Maximum of Row " << i << ":" << setw(8) << setprecision(5) << max << endl;
-        max = 0;
+        cout << "Column " << j << ":" << setw(8) << setprecision(5) << min << endl;
+        min = nm[i][j];
     }
 
     return (0);
 }
-
-//----------------------- 19. Максимум столбцов матрицы    -----
-float columns_max(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-    
-    float max = nm[i][j];
-
-    for (j = 0; j < N; j++) {
-        for (i = 0; i < N; i++)
-        {
-            if (nm[i][j] > max) max = nm[i][j];
-        }
-        cout << "Maximum of column " << j << ":" << setw(8) << setprecision(5) << max << endl;
-        max = 0;
-    }
-
-    return (0);
-}
-
-//----------------------- 20. Средне арифметическое строк матрицы    -----
-float rows_average(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-
-    float max = nm[i][j];
-
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++)
-        {
-            max += nm[i][j];
-        }
-        max = max / N;
-        cout << "Rows average" << j << ":" << setw(8) << setprecision(5) << max << endl;
-        max = nm[i][j];
-    }
-
-    return (0);
-}
-
-//----------------------- 21. Среднеарифметическое столбцов матрицы    -----
-float columns_average(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-
-    float max = nm[i][j];
-
-    for (j = 0; j < N; j++) {
-        for (i = 0; i < N; i++)
-        {
-            max += nm[i][j];
-        }
-        max = max / N;
-        cout << "Column average " << j << ":" << setw(8) << setprecision(5) << max << endl;
-        max = 0;
-    }
-
-    return (0);
-}
-
-//----------------------- 22. Сумма нижнетреугольной части матрицы    -----
-float sum_L(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-    int c = -1;
-
-    float max = nm[i][j];
-
-    for (i = 0; i < N; i++) {
-        c++;
-        for (j = 0; j < c; j++)
-        {
-            max += nm[i][j];
-        }
-    }
-    return max;
-}
-
-//----------------------- 23. Сумма верхнетреугольной части матрицы -----
-float sum_U(float(*nm)[N]) {
-    int i = 0;
-    int j = 0;
-    int c = -1;
-
-    float max = nm[i][j];
-
-    for (i = 0; i < N; i++) {
-        c++;
-        for (j = c; j < N; j++)
-        {
-            max += nm[i][j];
-        }
-    }
-    return max;
-}
-
-//----------------------- 24. Элемент наиболее близкий к среднеарифметическому -----
-float closest_to_average(float(*nm)[N], float average) {
-    int i = 0;
-    int j = 0;
-    float mtrx_lmt = 0.0;  //элемент матрицы   
-    float max = nm[i][j];
-
-    float diff = abs(nm[i][j]-average);             //переменная для разности
-
-    for (i = 0; i < N; i++){
-        for (j = 0; j < N; j++)
-        {
-            if ((max = abs(nm[i][j] - average)) < diff ) {
-                diff = max;
-                mtrx_lmt = nm[i][j];
-            }
-        }
-    }
-    return mtrx_lmt;
-}
-
 
 //--------- Вывод меню    -----
 void print_menu() {
@@ -660,40 +390,20 @@ void print_menu() {
     cout << "Operation with matrix" << endl;
     cout << "1. Minimum of matrix" << endl;
     cout << "2. Maxim of matrix" << endl;
-    cout << "3. Maximum of the lower triangular part of the matrix" << endl;
-    cout << "4. Maximum of the upper triangular part of the matrix" << endl;
-    cout << "5. Minimum of the lower triangular part of the matrix" << endl;
-    cout << "6. Minimum of the upper triangular part of the matrix" << endl;
-    cout << "7. Minimum of the main diagonal" << endl;
-    cout << "8. Maximum of the main diagonal" << endl;
-    cout << "9. Minimum of the secondary diagonal" << endl;
-    cout << "10. Maximum of the secondary diagonal" << endl;
-    cout << "11. Average of Matrix" << endl;
-    cout << "12. Average of the lower triangular part of the matrix" << endl;
-    cout << "13. Average of the upper triangular part of the matrix" << endl;
-    cout << "14. Sum of elements Rows" << endl;
-    cout << "15. Sum of elements Columns" << endl;
-    cout << "16. Minimum of Rows" << endl;
-    cout << "17. Minimum of Columns" << endl;
-    cout << "18. Maximum of Rows" << endl;
-    cout << "19. Maximum of columns" << endl;
-    cout << "20. Rows average" << endl;
-    cout << "21. Column average" << endl;
-    cout << "22. Sum of the lower triangular part of the matrix" << endl;
-    cout << "23. Sum of the upper triangular part of the matrix" << endl;
-    cout << "24. Closest to average" << endl;
-    cout << "25. Exit" << endl;
+    cout << "3. Print the highest price" << endl;
+    cout << "4. Print the lowest price" << endl;
+    cout << "5. Exit" << endl;
     cout << ">";
 }
 
 //--------- Получаем меню   -----
 int get_variant(int count) {
     int variant;
-    string s; // строка для считывания введённых данных
-    getline(cin, s); // считываем строку                                                                    // считываем строку
+    string s;                                                                               // строка для считывания введённых данных
+    getline(cin, s);                                                                        // считываем строку
 
                                                                                             // пока ввод некорректен, сообщаем об этом и просим повторить его
-    while (sscanf(s.c_str(), "%d", &variant) != 1 || variant < 1 || variant > count) {
+    while (scanf_s(s.c_str(), "%d", &variant) != 1 || variant < 1 || variant > count) {
         cout << "Incorrect input. Try again: ";                                             // выводим сообщение об ошибке
         getline(cin, s);                                                                    // считываем строку повторно
     }

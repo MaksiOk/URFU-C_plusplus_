@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdlib.h>
+#include <vector>
 
 
 using namespace std;
@@ -26,18 +27,21 @@ int StringLength2(char* strok) {
 }
 
 int StringLength3(char* strok) {
-    int i = 0;
-   // i = end(strok);
-    return (i);
+    int counter = 0;
+    while (strok[++counter]) {
+    }
+    return counter;
 }
 
 void copy(char* str1, char* str2) {
     int n1 = StringLength1(str1);
     int n2 = StringLength1(str2);
+    int i = 0;
     
-    for (int i = 0; i < n2; i++ ) {
+    for (i = 0; i < n2; i++ ) {
         str1[i] = str2[i];
     }
+    str1[i] = '\0';
 }
 
 void comparison(char* str1, char* str2) {
@@ -70,11 +74,25 @@ void konkat(char* str1, char* str2) {
 
 int main()
 {
-    //char* str1, * str2;
-    //str1 = (char*)malloc(100);
-    //str2 = (char*)malloc(100);
-    char str1[] = "qwerty", str2[] = "1234567890";
+    int i = 0;
+    char x;
+    char *str1;
+    char *str2;
+    str1 = (char*)malloc(100);
+    str2 = (char*)malloc(100);
+    //str1 = (char*)calloc(100, sizeof(char));
+    //str2 = (char*)calloc(100, sizeof(char));
+    //str1 = "qwerty", 
+    //str2 = "1234567890";
 
+    cout << "Insert String 1" << endl;
+    cin >> str1;
+    cout << "Insert String 2" << endl;
+    cin >> str2;
+
+    cout << str1 << endl;
+    cout << str2 << endl;
+    
     int lenght = 0;
 
     lenght = StringLength1(str1);
@@ -92,27 +110,38 @@ int main()
     lenght = StringLength2(str2);
     cout << "String Length 2 metod 2:" << lenght << endl;
 
-   // lenght = StringLength3(str1);
+    lenght = StringLength3(str1);
     //lenght = (*(&str1+1) - str1)-1;
     cout << "String Length 1 metod 3:" << lenght << endl;
 
-    //lenght = StringLength3(str2);
+    lenght = StringLength3(str2);
     //lenght = (*(&str2+1) - str2)-1;
     cout << "String Length 2 metod 3:" << lenght << endl;
     
     copy(str2, str1);
     cout << "Copy str 1 in str 2: " << str2 << endl;
 
-    char str11[] = "qwerty", str12[] = "qwerty";
+   // char str11[256] = "qwerty", str12[] = "75031";
 
-    comparison(str11, str12);
+    comparison(str1, str2);
 
-    konkat(str11, str12);
-    cout << "concotenation: str1=" << str11;
-    cout << ", str2=" << str12 << endl;
+    konkat(str1, str2);
+    cout << "concotenation: str1=" << str1;
+    cout << ", str2=" << str2 << endl;
 
-   // free(str1);
-   // free(str2);
+    vector <string> Strings = { "apple","orange","onion" };
+    for (auto word : Strings) {
+        char str[sizeof(word) / sizeof(char)];
+        strcpy(str, word.c_str());
+        cout << str << endl;
+        copy(str, str2);
+        cout << str << endl;
+        lenght = StringLength1(str);
+        cout << lenght << endl;
+    }
+
+   free(str1);
+   free(str2);
     return 0;
 }
 

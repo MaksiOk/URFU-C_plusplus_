@@ -1,0 +1,6 @@
+Tuc tuc 
+But it is worth noting that this is a limited way,
+because when reading a file, the stream in uses
+space to separate one value from another and so
+reads these values into the x and y variables in a manner.
+If we need to write and then read a string that contains spaces, and some other data, then this method, of course, will not work.

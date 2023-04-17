@@ -12,9 +12,30 @@
 #include <windows.h>
 #include <stdio.h>
 
-//using namespace std;
+std::string PathWithLabels(std::string srcPath, std::string postfix) {
+    reverse(srcPath.begin(), srcPath.end());
+    std::string strPathWithOldLabels;
+    if (srcPath.find('.') != std::string::npos & srcPath.find('.') < srcPath.length() - 2) {
+        std::string format = srcPath.substr(0, srcPath.find('.'));
+        std::string baseName = srcPath.substr(srcPath.find('.') + 1, srcPath.length());;
+        reverse(format.begin(), format.end());
+        reverse(baseName.begin(), baseName.end());
+        std::cout << "format = " << format << std::endl;
+        std::cout << "baseName = " << baseName << std::endl;
+        strPathWithOldLabels = baseName + "_" + postfix + "." + format;
+        std::cout << "strPathWithLabel = " << strPathWithOldLabels << std::endl;
+    }
+    else {
+        reverse(srcPath.begin(), srcPath.end());
+        strPathWithOldLabels = srcPath + "_" + postfix;
+        std::cout << "new FILE with label = " << strPathWithOldLabels << std::endl;
+    }
+    return strPathWithOldLabels;
+}
 
-int Count_Empty(char* name) {
+
+//Считает непечатемые символы
+int Count_Empty(char* name) { 
     int space = 0;
     char ch;
     std::ifstream in(name);
@@ -27,7 +48,8 @@ int Count_Empty(char* name) {
     return space;
 }
 
-int Count_Not_Empty(char* name) {
+//Считает печатемые символы
+int Count_Not_Empty(char* name) { 
     int space = 0;
     char ch;
     std::ifstream in(name);
@@ -40,17 +62,20 @@ int Count_Not_Empty(char* name) {
     return space;
 }
 
+//Ищет и подсвечивает подстроку в строке
 void SubString_Search(char* name, std::string WordToFind) {
+    system("cls");
     std::string line;
     std::ifstream in(name); // окрываем файл для чтения
     size_t substring_length;
     int NumOfChar = WordToFind.length();
    
-    std::cout << NumOfChar << std::endl;
+    //std::cout << NumOfChar << std::endl;
     if (in.is_open()) {
-        while (getline(in, line)) {
+        while (getline(in, line,'\f')) {
             int index = 0;
             while ((substring_length = line.find(WordToFind, index)) != std::string::npos) {
+                //std::cout << substring_length << std::endl;
                 std::cout << line.substr(index, substring_length-index);
                 wprintf(L"\x1b[34;46m");
                 std::cout << line.substr(substring_length, NumOfChar);
@@ -71,9 +96,27 @@ void SubString_Search(char* name, std::string WordToFind) {
     in.close();     // закрываем файл
 }
 
+
+void PageNumberReverse(std::string name) {
+    std::string line;
+    std::string srcPath_old = PathWithLabels(name, "old");
+    rename(name.c_str(), srcPath_old.c_str());
+
+    std::ofstream out(name);            // поток для записи
+    std::ifstream in(srcPath_old);      // поток для чтения
+    
+    while (getline(in, line, '\f')) {
+        if (out.is_open()) {
+            out << line << std::endl;
+        }
+        out.close();
+        std::cout << "File has been written" << std::endl;
+    }
+}
+
+
 int main()
 {
-    
     // Set output mode to handle virtual terminal sequences
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     if (hOut == INVALID_HANDLE_VALUE)
@@ -103,40 +146,39 @@ int main()
     wprintf(L"\x1b[39mThis text has restored the foreground color only.\r\n");
     wprintf(L"\x1b[49mThis text has restored the background color only.\r\n");*/
     std::string line;
-    char ch, name[50] = "Test.txt";
+    char ch = 0, name[50] = "Test.txt";
     std::string WordToFind;
-    //FILE* in;
+    /*FILE* in;
     std::cout << "Open File Test.txt" << std::endl;
-    //std::cin >> name;
-
+    //std::cin >> name;*/
    
-
     std::ifstream in(name); // окрываем файл для чтения
     if (in.is_open()){
         while (getline(in, line)){
             std::cout << line << std::endl;
         }
     }
-    in.close();     // закрываем файл
+    in.close();             // закрываем файл
 
-    std::cout << "Empty symbols - ";
+    /*std::cout << "Empty symbols - ";
     std::cout << Count_Empty(name) << std::endl;
     std::cout << "Not Empty symbols - ";
-    std::cout << Count_Not_Empty(name) << std::endl;
+    std::cout << Count_Not_Empty(name) << std::endl;*/
 
     std::cout << "Insert word to find - ";
     std::cin >> WordToFind;
 
     SubString_Search(name, WordToFind);
 
-    //if ((in = fopen(name, "r")) == NULL) {
-    //    cout << "File didn't open" << endl;
-    //} else{
-    //    while (!feof(in)) {
-    //        ch = getc(in);
-    //        putchar(ch);
-    //    }
-    //}
+    //PageNumberReverse(name);
+    /*if ((in = fopen(name, "r")) == NULL) {
+        cout << "File didn't open" << endl;
+    } else{
+        while (!feof(in)) {
+            ch = getc(in);
+            putchar(ch);
+        }
+    }*/
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

@@ -96,7 +96,6 @@ int main()
     int lenght = 0;
 
     lenght = StringLength1(str1);
-
     cout << "String Length 1 metod 1:" << lenght << endl;
 
     lenght = StringLength1(str2);
@@ -104,18 +103,15 @@ int main()
 
 
     lenght = StringLength2(str1);
-
     cout << "String Length 1 metod 2:" << lenght << endl;
 
     lenght = StringLength2(str2);
     cout << "String Length 2 metod 2:" << lenght << endl;
 
     lenght = StringLength3(str1);
-    //lenght = (*(&str1+1) - str1)-1;
     cout << "String Length 1 metod 3:" << lenght << endl;
 
     lenght = StringLength3(str2);
-    //lenght = (*(&str2+1) - str2)-1;
     cout << "String Length 2 metod 3:" << lenght << endl;
     
     copy(str2, str1);
@@ -129,16 +125,18 @@ int main()
     cout << "concotenation: str1=" << str1;
     cout << ", str2=" << str2 << endl;
 
-    vector <string> Strings = { "apple","orange","onion" };
+    vector <string> Strings = { "cat","dog","rabbit" };
     for (auto word : Strings) {
         char str[sizeof(word) / sizeof(char)];
         strcpy(str, word.c_str());
         cout << str << endl;
-        copy(str, str2);
-        cout << str << endl;
+        cout << str2 << endl;
+        copy(str2, str);
+        cout << str2 << endl;
         lenght = StringLength1(str);
         cout << lenght << endl;
     }
+    
 
    free(str1);
    free(str2);

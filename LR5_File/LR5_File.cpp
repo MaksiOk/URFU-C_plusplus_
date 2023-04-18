@@ -11,6 +11,7 @@
 #include <wchar.h>
 #include <windows.h>
 #include <stdio.h>
+#include <regex>
 
 std::string PathWithLabels(std::string srcPath, std::string postfix) {
     reverse(srcPath.begin(), srcPath.end());
@@ -33,12 +34,24 @@ std::string PathWithLabels(std::string srcPath, std::string postfix) {
     return strPathWithOldLabels;
 }
 
+void CreateFileForTaskFour(std::string srcPath, std::string dstFileName, int countOfString) {
+    std::ifstream inputFile(srcPath);
+    std::ofstream rezultFile(dstFileName);
+    std::string line;
+    int numberOfString = 1;
+    if (inputFile) {
+        while (countOfString--) {
+            getline(inputFile, line, char(0));
+            rezultFile << "-" << numberOfString++ << "-\n" << line << "\f\n";
+        }
+    }
+}
 
 //Считает непечатемые символы
 int Count_Empty(char* name) { 
     int space = 0;
     char ch;
-    std::ifstream in(name);
+    std::ifstream in(name);     //открытие
 
     while (in.get(ch))
     {
@@ -72,7 +85,7 @@ void SubString_Search(char* name, std::string WordToFind) {
    
     //std::cout << NumOfChar << std::endl;
     if (in.is_open()) {
-        while (getline(in, line,'\f')) {
+        while (getline(in, line)) {
             int index = 0;
             while ((substring_length = line.find(WordToFind, index)) != std::string::npos) {
                 //std::cout << substring_length << std::endl;
@@ -98,25 +111,73 @@ void SubString_Search(char* name, std::string WordToFind) {
 
 
 void PageNumberReverse(std::string name) {
-    std::string line;
     std::string srcPath_old = PathWithLabels(name, "old");
     rename(name.c_str(), srcPath_old.c_str());
+    std::ifstream input(srcPath_old);
+    std::ofstream output(name, std::ios::app);
+    std::string line;
+    std::cmatch result;
+    std::regex regular("([\\n]?-)""([\\d]+)""(-\\n)""([.|\\s|\\w|\\S|\\W]*)");
 
-    std::ofstream out(name);            // поток для записи
-    std::ifstream in(srcPath_old);      // поток для чтения
-    
-    while (getline(in, line, '\f')) {
-        if (out.is_open()) {
-            out << line << std::endl;
+    if (input) {  //если поток открылся без ошибок, то true
+        while (getline(input, line, '\f')) {
+            if (regex_match(line.c_str(), result, regular)) {
+                std::cout << "Regex done" << std::endl;
+                for (int i = 0; i < result.size(); ++i) {
+                    std::cout << "I= " << i << " result: " << result[i] << std::endl;
+                }
+                output << result[4] << '\n' << result[2] << "\n\f\n";
+
+            }
+            else {
+                std::cout << "\nRegex didn't work\n";
+            }
         }
-        out.close();
-        std::cout << "File has been written" << std::endl;
     }
 }
 
+void Encoder(std::string postfixForNewFile) {
+    std::string path;
+    std::string key;
+    std::cout << "Insert File Name to Encode";
+    std::cin >> path;
+    std::ifstream inputFile(path);
+    std::string line;
+    if (inputFile) {  //если поток открылся без ошибок, то true
+        std::cout << "File Load" << std::endl;
+    }
+    else {
+        std::cout << "can't load file" << std::endl;
+    }
+    std::cout << "Insert key:" << std::endl;
+    std::cin >> key;
 
-int main()
-{
+    std::ofstream encryptedFile(PathWithLabels(path, postfixForNewFile));
+    encryptedFile.setf(std::ios::app);
+    int x = 3;
+    getline(inputFile, line, char(0));
+    int index = 0;
+    //char k = key[index];
+    for (auto alpha : line) {
+        if (index < key.length()) {
+            int charCode = int(alpha) ^ int(key[index++]);
+            encryptedFile << char(charCode);
+
+
+        }
+        else {
+            index = 0;
+            int charCode = int(alpha) ^ int(key[index++]);
+            encryptedFile << char(charCode);
+        }
+    }
+    encryptedFile.close();
+
+
+}
+
+
+int main(){
     // Set output mode to handle virtual terminal sequences
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     if (hOut == INVALID_HANDLE_VALUE)
@@ -160,17 +221,20 @@ int main()
     }
     in.close();             // закрываем файл
 
-    /*std::cout << "Empty symbols - ";
+    std::cout << "Empty symbols - ";
     std::cout << Count_Empty(name) << std::endl;
     std::cout << "Not Empty symbols - ";
-    std::cout << Count_Not_Empty(name) << std::endl;*/
+    std::cout << Count_Not_Empty(name) << std::endl;
 
-    std::cout << "Insert word to find - ";
-    std::cin >> WordToFind;
+    //std::cout << "Insert word to find - ";
+    //std::cin >> WordToFind;
 
-    SubString_Search(name, WordToFind);
+    //SubString_Search(name, WordToFind);
+    //CreateFileForTaskFour(name, "testi.txt", 5);
 
-    //PageNumberReverse(name);
+    //PageNumberReverse("testi.txt");
+    Encoder("Coded");
+
     /*if ((in = fopen(name, "r")) == NULL) {
         cout << "File didn't open" << endl;
     } else{

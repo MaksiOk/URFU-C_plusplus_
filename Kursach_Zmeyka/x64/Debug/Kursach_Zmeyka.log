@@ -1,0 +1,4 @@
+﻿  Kursach_Zmeyka.cpp
+D:\YandexDisk\Учеба\УРФУ\Семестр 4\Современные языки программирования\Лабараторные работы\LabRepo\Kursach_Zmeyka\Kursach_Zmeyka.cpp(199,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\YandexDisk\Учеба\УРФУ\Семестр 4\Современные языки программирования\Лабараторные работы\LabRepo\Kursach_Zmeyka\Kursach_Zmeyka.cpp(244,25): warning C4805: ==: небезопасное смешение типа "int" и типа "bool" в операции
+  Kursach_Zmeyka.vcxproj -> D:\YandexDisk\Учеба\УРФУ\Семестр 4\Современные языки программирования\Лабараторные работы\LabRepo\Kursach_Zmeyka\x64\Debug\Kursach_Zmeyka.exe

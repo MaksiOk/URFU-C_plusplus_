@@ -1,0 +1,6 @@
+FName
+When you name a new asset in the Content Browser, change a parameter in a Dynamic Material Instance, or access a bone in a Skeletal Mesh, you are using FNames. FNames provide a very lightweight system for using strings, where a given string is stored only once in a data table, even if it is reused.
+
+FNames are case-insensitive. They are immutable, and cannot be manipulated. The storage system and static nature of FNames means that it is fast to look up and access FNames with keys. Another feature of the FName subsystem is the use of a hash table to provide fast string to FName conversions.
+
+FNames are case-insensitive, and are stored as a combination of an index into a table of unique strings and an instance number.
